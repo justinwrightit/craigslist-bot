@@ -1,0 +1,11 @@
+{
+  "name": "cljobbot",
+  "version": "0.0.1",
+  "description": "finds job listings posted today and returns them",
+  "main": "cljobbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marcelo McAndrew",
+  "license": "ISC"
+}
