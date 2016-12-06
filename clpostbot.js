@@ -6,7 +6,7 @@ var uploader = require('nightmare-upload')(Nightmare);
 var prompt = require('prompt')
 //require prompt
 var fs = require('fs')
-
+var path = require('path')
 
 var nightmare = Nightmare({
   webPreferences: {
@@ -17,18 +17,17 @@ var nightmare = Nightmare({
 
 var url="http://washingtondc.craigslist.org/"
 
-// Get content from file
-var contents = fs.readFileSync("post.json");
-// Define to JSON type
-var post = JSON.parse(contents);
-
-
 var schema = {
   properties: {
 
     password: {
       required: true,
       hidden: true
+
+    },
+    post_file: {
+      required: true,
+      hidden: false
 
     }
   }
@@ -41,12 +40,15 @@ prompt.start();
 //
 prompt.get(schema, function (err, result) {
 
-
+  // Get content from file
+  var contents = fs.readFileSync(result.post_file);
+  // Define to JSON type
+  var post = JSON.parse(contents);
 
   nightmare.viewport(2560,1440).goto(url)
   //loads craigslist home page
 
-    .wait(500)
+    .wait('#post')
     //waits 1/2 of a second for the page to load
     .click('#post')
     //clicks 'post to classifieds' (#post)
@@ -55,7 +57,7 @@ prompt.get(schema, function (err, result) {
     .click('.pickbutton')
     //clicks the continue button
     .wait(500)
-    //waits 1 second for the page to load
+    //waits 1/2 second for the page to load
     .click('label:nth-of-type('+post.category+')')
     //type 18: clothing
     //type 22: electronics
@@ -63,6 +65,7 @@ prompt.get(schema, function (err, result) {
 
     .wait(500)
     //waits 1/2 of a second for the page to load
+
     .click('label:nth-of-type(3)')
     //clicks on location radio button
     .click('.pickbutton')
@@ -97,13 +100,19 @@ prompt.get(schema, function (err, result) {
 
     .click('.bigbutton')
     //proceed to image uploader
-
-    .wait(2000)
-    //wait 1/2 of a second for the page to load
-    .upload('#plupload','golf.jpg')
-    //upload image (has to be in imgs folder)
-
     .wait(1000)
+
+    .click('#classic')
+
+    .wait(2000).end();
+    //wait 1/2 of a second for the page to load and end nightmare
+
+    for(var x=0;x<post.img.length;x++){
+      nightmare.upload('input:nth-of-type(3)' , post.img[x]).wait(1000).end();
+    }
+    //loops through the imgs
+
+    nightmare.wait(1000)//restart nightmare
     .screenshot('test.png')
     //.click('button.pickbutton')
 
