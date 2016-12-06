@@ -9,6 +9,11 @@
   "author": "Marcelo McAndrew",
   "license": "ISC",
   "dependencies": {
-    "path": "^0.12.7"
+    "fs": "0.0.1-security",
+    "jquery": "^3.1.1",
+    "nightmare": "^2.8.1",
+    "nightmare-upload": "^0.1.1",
+    "path": "^0.12.7",
+    "prompt": "^1.0.0"
   }
 }
