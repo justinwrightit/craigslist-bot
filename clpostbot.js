@@ -41,7 +41,7 @@ prompt.start();
 prompt.get(schema, function (err, result) {
 
   // Get content from file
-  var contents = fs.readFileSync(result.post_file);
+  var contents = fs.readFileSync(path.resolve('posts')+'/'+result.post_file);
   // Define to JSON type
   var post = JSON.parse(contents);
 
@@ -112,8 +112,18 @@ prompt.get(schema, function (err, result) {
     }
     //loops through the imgs
 
-    nightmare.wait(1000)//restart nightmare
-    .screenshot('test.png')
+
+    nightmare.wait(750)//restart nightmare and wait
+
+    .click('button.done.bigbutton')//done w images
+    .wait(500)//wait 1/2 of a second
+
+    .click('.button')//publish the ad
+    .wait(500)//wait 1/2 of a second
+
+
+
+    //.screenshot('test.png')
     //.click('button.pickbutton')
 
 
