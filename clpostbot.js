@@ -1,10 +1,7 @@
 var jquery = require('jquery')
-// jquery allows easy selection of css/html elements in the dom
 var Nightmare = require('nightmare')
 var uploader = require('nightmare-upload')(Nightmare);
-//require nightmare js
 var prompt = require('prompt')
-//require prompt
 var fs = require('fs')
 var path = require('path')
 
@@ -13,13 +10,11 @@ var nightmare = Nightmare({
     partition: 'nopersist'
   }
 })
-//clears the local storage
 
 var url="http://washingtondc.craigslist.org/"
 
 var schema = {
   properties: {
-
     password: {
       required: true,
       hidden: true
@@ -28,16 +23,12 @@ var schema = {
     post_file: {
       required: true,
       hidden: false
-
     }
   }
 };
-//requires email and password and hides password
+
 
 prompt.start();
-//
-// Get two properties from the user: email, password
-//
 prompt.get(schema, function (err, result) {
 
   // Get content from file
@@ -119,11 +110,11 @@ prompt.get(schema, function (err, result) {
     .wait(500)//wait 1/2 of a second
 
     .click('.button')//publish the ad
-    .wait(500)//wait 1/2 of a second
+    .wait(2000)//wait 1/2 of a second
 
 
 
-    //.screenshot('test.png')
+    .screenshot('test.png')
     //.click('button.pickbutton')
 
 
