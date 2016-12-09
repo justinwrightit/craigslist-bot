@@ -14,6 +14,7 @@
     "nightmare": "^2.8.1",
     "nightmare-upload": "^0.1.1",
     "path": "^0.12.7",
+    "performance": "^1.1.1",
     "prompt": "^1.0.0"
   }
 }

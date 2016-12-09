@@ -13,6 +13,8 @@ var nightmare = Nightmare({
   webPreferences: {
     partition: 'nopersist'
   }
+  , show:true
+
 })
 
 //url of craigslist
@@ -33,10 +35,15 @@ var schema = {
   }
 };
 
+console.time("timer name")
+
 //start the prompt
 prompt.start();
 //prompts can be accessed by result.password and result.post_file
+
 prompt.get(schema, function (err, result) {
+
+
 
   //get the post_file from the post folder in the root directory
   var contents = fs.readFileSync(path.resolve('posts')+'/'+result.post_file);
@@ -67,9 +74,9 @@ prompt.get(schema, function (err, result) {
     .wait(500)//wait 500ms for page to load
     .click('a[href^="https"]')//click login
     .wait(500)//wait 500ms for page to load
-    .type('#inputEmailHandle', post.email)//enter the email from the JSON
-    .type('#inputPassword', result.password)//enter the password from the prompt
-    .wait(500)//wait 500ms for page to load
+    .insert('#inputEmailHandle', post.email)//enter the email from the JSON
+    .insert('#inputPassword', result.password)//enter the password from the prompt
+    .wait(1000)//wait 500ms for page to load
     .click('.accountform-btn')//hit login
 
     //on the post page
@@ -90,7 +97,7 @@ prompt.get(schema, function (err, result) {
 
     //loops through and posts all images in the img array in the JSON
     for(var x=0;x<post.img.length;x++){
-      nightmare.upload('input:nth-of-type(3)' , post.img[x]).wait(1000).end();
+      nightmare.upload('input:nth-of-type(3)' , post.img[x]).wait(5000).end();
     }
 
     nightmare.wait(750)//start nightmare again and wait 750ms for page to load
@@ -107,3 +114,5 @@ prompt.get(schema, function (err, result) {
     })
 
 });
+
+console.timeEnd("timer name")
