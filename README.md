@@ -1,4 +1,4 @@
-#Craigslist Bot 1.0 (Still in Dev)#
+#Craigslist Bot 1.0#
 
 Allows user to automatically post on craigslist through entering information in a post template json, then entering password and the json file name.
 

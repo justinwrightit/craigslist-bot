@@ -10,6 +10,7 @@ var path = require('path')
 
 //clear the local storage everytime nightmare runs
 var nightmare = Nightmare({
+  show:true,
   webPreferences: {
     partition: 'nopersist'
   }
@@ -58,7 +59,7 @@ prompt.get(schema, function (err, result) {
     .click('#post')//click "post to classifieds"
 
     //on the choose sale type page
-    .click('input[value=fso]')//click the "for sale by owner" radio button
+    .click('input[value='+post.type+']')//click the "for sale by owner" radio button
     .click('.pickbutton')//click continue
 
     //on the select category page
