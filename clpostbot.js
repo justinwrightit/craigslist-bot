@@ -10,16 +10,14 @@ var path = require('path')
 
 //clear the local storage everytime nightmare runs
 var nightmare = Nightmare({
-  show:true,
   webPreferences: {
     partition: 'nopersist'
   }
   , show:true
-
 })
-
 //url of craigslist
 var url="http://washingtondc.craigslist.org/"
+var imgs= 0
 
 //require user to input password and post.json file
 var schema = {
@@ -36,7 +34,7 @@ var schema = {
   }
 };
 
-console.time("timer name")
+console.time("Runtime: ")
 
 //start the prompt
 prompt.start();
@@ -44,15 +42,13 @@ prompt.start();
 
 prompt.get(schema, function (err, result) {
 
-
-
   //get the post_file from the post folder in the root directory
   var contents = fs.readFileSync(path.resolve('posts')+'/'+result.post_file);
   //parse contents e.g post.img, post.title
   var post = JSON.parse(contents);
 
   //start nightmare and set the viewport and go to craigslist url
-  nightmare.viewport(2560,1440).goto(url)
+  nightmare.viewport(1000,500).goto(url)
 
     //on the craigslist home page
     .wait('#post')//wait for the post element to load
@@ -63,18 +59,18 @@ prompt.get(schema, function (err, result) {
     .click('.pickbutton')//click continue
 
     //on the select category page
-    .wait(500)//wait 500ms for page to load
+    .wait(1000)//wait 500ms for page to load
     .click('label:nth-of-type('+post.category+')')//select category from JSON
 
     //on the location page
-    .wait(500)//wait 500ms for page to load
+    .wait(1000)//wait 500ms for page to load
     .click('label:nth-of-type(3)')//select Maryland
     .click('.pickbutton')//hit continue
 
-    //on the post page
+    //on the login page
     .wait(500)//wait 500ms for page to load
     .click('a[href^="https"]')//click login
-    .wait(500)//wait 500ms for page to load
+    .wait('#inputEmailHandle')//wait 500ms for page to load
     .insert('#inputEmailHandle', post.email)//enter the email from the JSON
     .insert('#inputPassword', result.password)//enter the password from the prompt
     .wait(1000)//wait 500ms for page to load
@@ -98,12 +94,11 @@ prompt.get(schema, function (err, result) {
 
     //loops through and posts all images in the img array in the JSON
     for(var x=0;x<post.img.length;x++){
-      nightmare.upload('input:nth-of-type(3)' , post.img[x]).wait(5000).end();
+      nightmare.upload('input:nth-of-type(3)' , post.img[x]).wait(2000).end();
     }
 
-    nightmare.wait(750)//start nightmare again and wait 750ms for page to load
-
-    .click('button.done.bigbutton')//hit done with images
+    nightmare.wait(1000)//start nightmare again and wait 750ms for page to load
+    .click('.done.bigbutton')//hit done with images
     .wait(1000)//wait 1 seconds for page to load
     .click('.button')//click the post button
     .wait(2000)//wait 2 seconds for page to load
@@ -111,9 +106,8 @@ prompt.get(schema, function (err, result) {
     .end()
 
     .then(function(result){
-      //console.log(test);
+      console.log("Successful post!");
+      console.timeEnd("Runtime: ")
     })
 
 });
-
-console.timeEnd("timer name")
