@@ -102,7 +102,7 @@ prompt.get(schema, function (err, result) {
     .wait(1000)//wait 1 seconds for page to load
     .click('.button')//click the post button
     .wait(2000)//wait 2 seconds for page to load
-    .screenshot('test.png')//take screenshot and use it as test.pngS
+    .screenshot('test.png')//take screenshot and use it as test.png
     .end()
 
     .then(function(result){
