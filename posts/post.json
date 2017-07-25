@@ -6,5 +6,5 @@
   "price": "50",
   "postalCode": "20740",
   "postBody": "this is a Cl post bot test",
-  "img": ["C:/Users/Marcelo McAndrew/Documents/Apps/CraigslistAutoPostBot/imgs/sponge.jpg","C:/Users/Marcelo McAndrew/Documents/Apps/CraigslistAutoPostBot/imgs/star.png"]
+  "img": ["../imgs/sponge.jpg"]
 }

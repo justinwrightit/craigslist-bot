@@ -59,49 +59,46 @@ prompt.get(schema, function (err, result) {
     .click('.pickbutton')//click continue
 
     //on the select category page
-    .wait(1000)//wait 500ms for page to load
-    .click('label:nth-of-type('+post.category+')')//select category from JSON
+    .wait(2000)//wait 500ms for page to load
+    .click('li:nth-child('+post.category+') > label')//select category from JSON
 
     //on the location page
-    .wait(1000)//wait 500ms for page to load
-    .click('label:nth-of-type(3)')//select Maryland
+    .wait(2000)
+    .click('li:nth-child(3) > label')//select Maryland
     .click('.pickbutton')//hit continue
 
     //on the login page
-    .wait(500)//wait 500ms for page to load
+    .wait(1000)
     .click('a[href^="https"]')//click login
-    .wait('#inputEmailHandle')//wait 500ms for page to load
+    .wait(2000)
     .insert('#inputEmailHandle', post.email)//enter the email from the JSON
     .insert('#inputPassword', result.password)//enter the password from the prompt
-    .wait(1000)//wait 500ms for page to load
+    .wait(2000)
     .click('.accountform-btn')//hit login
 
     //on the post page
-    .wait(1000)//wait 1 second for page to load
-    .insert('#PostingTitle', post.postTitle)//enters post title from JSON
-    .insert('#Ask',post.price)//enters post price from JSON
-    .insert('#PostingBody',post.postBody)//enters post body from JSON
-    .insert('#postal_code',post.postalCode)//enters postal code from JSON
+    .wait(2000)
+    .type('#PostingTitle', post.postTitle)//enters post title from JSON
+    .type('#Ask',post.price)//enters post price from JSON
+    .type('#PostingBody',post.postBody)//enters post body from JSON
+    .type('#postal_code',post.postalCode)//enters postal code from JSON
     .click('#wantamap')//uncheck "show on map"
-    .wait(250)//wait 250ms for page to load
+    .wait(250)
     .click('.bigbutton')//click publish
 
     //image uploading page
-    .wait(1000)//wait 1 second for page to load
+    .wait(1000)
     .click('#classic')//click the "classic image uploader" button
     .wait(2000)
-    .end();//wait 2 seconds and end nightmare
 
     //loops through and posts all images in the img array in the JSON
-    for(var x=0;x<post.img.length;x++){
-      nightmare.upload('input:nth-of-type(3)' , post.img[x]).wait(2000).end();
-    }
+    //.upload('input[type="file"]:nth-child(3)' , post.img[0]).wait(5000)
 
-    nightmare.wait(1000)//start nightmare again and wait 750ms for page to load
+    .wait(1000)
     .click('.done.bigbutton')//hit done with images
-    .wait(1000)//wait 1 seconds for page to load
+    .wait(1000)
     .click('.button')//click the post button
-    .wait(2000)//wait 2 seconds for page to load
+    .wait(2000)
     .screenshot('test.png')//take screenshot and use it as test.png
     .end()
 
