@@ -6,5 +6,5 @@
   "price": "50",
   "postalCode": "20740",
   "postBody": "this is a Cl post bot test",
-  "img": ["../imgs/sponge.jpg"]
+  "img": ["./imgs/sponge.jpg"]
 }
